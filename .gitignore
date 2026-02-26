@@ -10,11 +10,11 @@ venv/
 .ipynb_checkpoints/
 
 # Data (Kaggle raw data)
-data/
+data/*
 !data/README.md
 
 # Outputs
-outputs/
+outputs/*
 !outputs/README.md
 
 # Logs / checkpoints
