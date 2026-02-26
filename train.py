@@ -11,12 +11,11 @@ from src.utils import set_seed , train_one_epoch, evaluate, save_predictions, fo
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data-root', type=str, required=True)
-    #ここがエポック数だよ！！！
+    parser.add_argument('--data-root', type=str, default = "./data/train")
     parser.add_argument('--epochs', type=int, default=2)
     parser.add_argument('--batch-size', type=int, default=4)
     parser.add_argument('--num-classes', type=int, default=2)
-    parser.add_argument('--save-dir', type=str, default='./outputs')
+    parser.add_argument('--save-dir', type=str, default='./outputs/val_pred')
     parser.add_argument(
         '--amp',
         type=str,
@@ -67,6 +66,9 @@ def main():
     save_dir = Path(args.save_dir)
     save_dir.mkdir(parents=True, exist_ok=True)
     save_predictions(model, val_loader, device, save_dir, args.num_classes)
+    model_path = Path("trained_model.pth")  # プロジェクト直下
+    torch.save(model.state_dict(), model_path)
+    print(f"モデルを保存しました")
 
 
 if __name__ == "__main__":
