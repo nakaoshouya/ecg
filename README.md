@@ -64,25 +64,28 @@
 以下に予測結果と、最終的に出力されたグラフの一例を示します。<br>
 また、以下で使用されている画像はKaggle上のデータではありません。<br>
 ノイズも本来のデータとは様相が違うため、若干モデルの精度が落ちています。<br>
+### 写真A<br>
 <p align="left">
   <img src="ECG/111.png" width="500">
 </p>
-↑写真A<br>
 写真Aのような綺麗な画像から波形を抽出するのは比較的簡単です。<br>
 しかし、実際のデータには影や紙のシワ、汚れ、撮影角度、PC画面の撮影など様々なノイズが含まれます。<br>
 以下の画像がノイズが加わった画像です。<br>
+
+### 写真B<br>
 <p align="left">
   <img src="ECG/111_noisy2.png" width="400">
 </p>
-↑写真B  
+
+### 写真C<br>
 <p align="left">
   <img src="ECG/111_noisy3.png" width="400">
 </p>
-↑写真C    
+
+### 写真D<br>   
 <p align="left">
   <img src="ECG/111_noisy4.png" width="400">
 </p>
-↑写真D <br>
 写真Aから、深層学習を用いて波形だけを抽出した結果が以下の写真です。<br>
 <p align="left">
   <img src="ECG/111_predict.png" width="500">
@@ -99,27 +102,30 @@
 しかし、写真B～Dのようなノイズを含んだ画像から波形を抽出するのは困難です。<br>
 後処理(デジタル化)の段階で波形を補完し、理想通りの波形を抽出可能な場合もあれば、そうでない場合もあります。<br>
 以下は写真B～Dの予測マスク画像と、一番上の波形を囲ったときにグラフです。<br>
+
+### 写真Bの予測マスク画像とグラフ 
 <p align="left">
   <img src="ECG/predict2.png" width="500">
 </p>
 <p align="left">
   <img src="ECG/graph2.png" width="500">
-</p>
-↑写真Bの予測マスク画像とグラフ  
+</p> 
+
+### 写真Cの予測マスク画像とグラフ 
 <p align="left">
   <img src="ECG/predict3.png" width="500">
 </p>
 <p align="left">
   <img src="ECG/graph3.png" width="500">
 </p>
-↑写真Cの予測マスク画像とグラフ  
+
+### 写真Dの予測マスク画像とグラフ 
 <p align="left">
   <img src="ECG/predict4.png" width="500">
 </p>
 <p align="left">
   <img src="ECG/graph4.png" width="500">
 </p>
-↑写真Dの予測マスク画像とグラフ<br>
 上記の写真からわかる通り、波形の抽出が許容範囲内の精度であれば後処理により理想的な波形グラフの作製が可能です。<br>
 一方、画像Eの結果を見てわかる通り、ノイズが重度で許容範囲外の精度の時は後処理後に理想とは程遠いグラフが出力されます。<br>
 
@@ -243,7 +249,7 @@ exit
 ### 言語・環境
 - Python
 - Windows 11
-- CUDA（GPU環境）
+- GPU（NVIDIA RTX 2000 Ada Generation）
 
 ### 深層学習
 - PyTorch 2.5.1（cu121 / CUDA 12.1）
@@ -272,9 +278,6 @@ exit
 - SymPy
 - Requests
 - PyYAML
-
-### GPU環境
-- NVIDIA RTX 2000 Ada Generation
 
 # 学習の構造🧠
 [ECG Dataset]<br>
