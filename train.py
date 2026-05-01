@@ -3,16 +3,15 @@ from pathlib import Path
 import torch
 from torch.utils.data import DataLoader, random_split
 
-# もしまだ import していなければ
 from src.preprocess import preprocess_test_image
 from src.dataset import SegDataset, TestImageDataset
 from src.model import UNet
-from src.utils import set_seed , train_one_epoch, evaluate, save_predictions, focal_loss_multi_class, dice_loss_multi_class, compute_miou
+from src.utils import set_seed , train_one_epoch, evaluate, save_predictions
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data-root', type=str, default = "./data/train")
-    parser.add_argument('--epochs', type=int, default=2)
+    parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--batch-size', type=int, default=4)
     parser.add_argument('--num-classes', type=int, default=2)
     parser.add_argument('--save-dir', type=str, default='./outputs/val_pred')
@@ -46,6 +45,8 @@ def main():
 
     # デバイス設定 & AMP
     cuda_ok = torch.cuda.is_available()
+    if cuda_ok:
+        print("GPU Ready")
     device = torch.device('cuda' if cuda_ok else 'cpu')
     amp_device = 'cuda' if (args.amp == 'auto' and cuda_ok) else 'cpu'
     scaler = torch.amp.GradScaler() if amp_device != 'cpu' else None
@@ -60,8 +61,8 @@ def main():
             amp_device=amp_device,
             accum_steps=args.accum_steps
         )
-        val_miou = evaluate(model, val_loader, device, args.num_classes)
-        print(f"Epoch {epoch+1}: train_loss={train_loss:.4f}, val_mIoU={val_miou:.4f}")
+        val_iou = evaluate(model, val_loader, device, args.num_classes)
+        print(f"Epoch {epoch+1}: train_loss={train_loss:.4f}, val_mIoU={val_iou:.4f}")
 
     save_dir = Path(args.save_dir)
     save_dir.mkdir(parents=True, exist_ok=True)

@@ -9,22 +9,17 @@ venv/
 # Jupyter
 .ipynb_checkpoints/
 
-# Data (Kaggle raw data)
-data/*
-!data/README.md
-
-# Outputs
-outputs/*
-!outputs/README.md
-
-# Logs / checkpoints
-*.pt
-*.pth
-*.ckpt
-
 # OS
 .DS_Store
 Thumbs.db
 
 # Docker
 *.tar
+
+#data
+data/
+
+#outputs
+outputs
+
+*.pth

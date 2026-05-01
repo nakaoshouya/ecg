@@ -5,6 +5,17 @@ import torch.nn.functional as F
 from pathlib import Path
 from torchvision.utils import save_image
 
+def set_seed(seed: int, deterministic=False):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    if deterministic:
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
+    else:
+        torch.backends.cudnn.benchmark = True
+
 def dice_loss_multi_class(pred, target, epsilon=1e-6):
     """
     pred: (B, C, H, W)  -- softmax確率
@@ -24,11 +35,6 @@ def dice_loss_multi_class(pred, target, epsilon=1e-6):
     return dice / (num_classes - 1)
 
 def focal_loss_multi_class(logits, target, gamma=2.0, alpha=None):
-    """
-    logits: (B, C, H, W)  -- 未正規化スコア
-    target: (B, H, W)      -- クラスラベル
-    alpha: (C,) tensor or None -- クラス重み
-    """
     ce_loss = F.cross_entropy(logits, target, weight=alpha, reduction='none')  # (B,H,W)
     pt = torch.exp(-ce_loss)  # 正解クラスの確率
     focal_loss = ((1 - pt) ** gamma * ce_loss).mean()
@@ -86,17 +92,6 @@ def save_predictions(model, loader, device, out_dir, num_classes, max_batches=4)
         batches += 1
         if batches >= max_batches:
             break
-
-def set_seed(seed: int, deterministic=False):
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    if deterministic:
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
-    else:
-        torch.backends.cudnn.benchmark = True
 
 def train_one_epoch(model, loader, optimizer, scaler, device, num_classes, amp_device,
                     accum_steps=1, use_dice=True, use_focal=True, focal_gamma=2.0, focal_alpha=None):

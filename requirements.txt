@@ -1,8 +1,62 @@
-torch>=2.1.0
-torchvision
-numpy
-opencv-python
-Pillow
-matplotlib
-tqdm
-scikit-learn
+# ネットワーク・HTTP
+certifi==2026.2.25
+charset-normalizer==3.4.4
+idna==3.11
+requests==2.32.5
+urllib3==2.6.3
+brotlicffi==1.2.0.0
+PySocks==1.7.1
+
+# 数値計算
+numpy==2.4.4
+scipy==1.17.1
+sympy==1.13.1
+mpmath==1.3.0
+gmpy2==2.2.2
+
+# データ処理
+pandas==3.0.2
+networkx==3.6.1
+munkres==1.1.4
+
+# 画像処理・CV
+pillow==12.1.1
+opencv-python-headless==4.13.0.92   # headless版を使用（GUIなし環境向け）
+# opencv-python は除外（X11/Display が必要なため）
+
+# グラフ描画（matplotlibはバックエンドをAggに設定すればheadlessで動作）
+matplotlib==3.9.1
+contourpy==1.3.3
+cycler==0.12.1
+fonttools==4.61.1
+kiwisolver==1.4.9
+pyparsing==3.3.2
+
+# テンプレート・設定ファイル
+Jinja2==3.1.6
+MarkupSafe==3.0.2
+PyYAML==6.0.3
+toml==0.10.2
+tomli==2.4.0
+
+# ユーティリティ
+filelock==3.20.3
+fsspec==2026.2.0
+packaging==25.0
+typing_extensions==4.15.0
+six==1.17.0
+python-dateutil==2.9.0.post0
+tzdata==2026.1
+unicodedata2==17.0.0
+
+# パーサー
+ply==3.11
+pycparser==2.23
+cffi==2.0.0
+
+# Web・非同期
+tornado==6.5.4
+
+# ビルド
+setuptools==80.10.1
+wheel==0.46.3
